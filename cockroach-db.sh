@@ -30,6 +30,7 @@ cockroach cert create-ca \
 IFS=',' read -ra ADDR <<< "$JOIN"
 for i in "${ADDR[@]}"; do
     IFS=';' read -ra NAME <<< "$i"
+    curl -O https://raw.githubusercontent.com/malikilamalik/nomad-config/main/cockroach-create-cert.sh
     # process "$i"
     sed -i "s!||EXTERNAL_IP||!${NAME[0]}!g" cockroach-create-cert.sh
     sed -i "s!||NAME||!${NAME[1]}!g" cockroach-create-cert.sh
@@ -38,6 +39,7 @@ for i in "${ADDR[@]}"; do
     mv certs/node.crt $APPLICATION_DIR/${NAME[1]}/certs
     mv certs/node.key $APPLICATION_DIR/${NAME[1]}/certs
     cp certs/ca.crt $APPLICATION_DIR/${NAME[1]}/certs
+    rm cockroach-create-cert.sh
 done
 
 cockroach cert create-node \
