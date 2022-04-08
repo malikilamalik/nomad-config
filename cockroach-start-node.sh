@@ -10,7 +10,7 @@ sudo cp -i cockroach-v21.2.7.linux-amd64/lib/libgeos_c.so /usr/local/lib/cockroa
 
 
 cockroach start \
---certs-dir=$APPLICATION_DIR/$NAME/certs \
+--certs-dir=$APPLICATION_DIR/$NODE_NAME/certs \
 --advertise-addr=$NODE_IP \
 --join=$NODE_JOIN \
 --cache=.25 \
