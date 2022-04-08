@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Intalling CockroachDB
 curl -O https://binaries.cockroachdb.com/cockroach-v21.2.7.linux-amd64.tgz
 tar -xzvf cockroach-v21.2.7.linux-amd64.tgz
@@ -8,9 +10,9 @@ sudo cp -i cockroach-v21.2.7.linux-amd64/lib/libgeos_c.so /usr/local/lib/cockroa
 
 
 cockroach start \
---certs-dir=drone-gitlab/certs \
---advertise-addr=103.181.143.219 \
---join=103.171.84.219,103.181.143.219 \
+--certs-dir=$APPLICATION_DIR/$NAME/certs \
+--advertise-addr=$NODE_IP \
+--join=$NODE_JOIN \
 --cache=.25 \
 --max-sql-memory=.25 \
 --background
