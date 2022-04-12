@@ -46,14 +46,14 @@ for i in "${ADDR[@]}"; do
 
     sudo -u nomad mkdir -p /home/nomad/.ssh/
     sudo -u nomad ssh-keygen -t rsa -N "" -f /home/nomad/.ssh/id_rsa
-    sudo -u nomad ssh-keyscan 103.174.115.97 | sudo -u nomad tee -a /home/nomad/.ssh/known_hosts
-    sudo sshpass -p $NODE_PASSWORD ssh-copy-id -i /home/nomad/.ssh/id_rsa.pub -p 22 $NODE_USERNAME@${NAME[0]}
+    sudo -u nomad ssh-keyscan ${NAME[0]} | sudo -u nomad tee -a /home/nomad/.ssh/known_hosts
+    sudo sshpass -p ${NAME[3]} ssh-copy-id -i /home/nomad/.ssh/id_rsa.pub -p 22 ${NAME[2]}@${NAME[0]}
 
-    sudo ssh -i /home/nomad/.ssh/id_rsa $NODE_USERNAME@${NAME[0]} "mkdir -p /home/$NODE_USERNAME/slave-certs/certs/"
-    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.crt $NODE_USERNAME@${NAME[0]}:/home/$NODE_USERNAME/slave-certs/certs/node.crt
-    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.key  $NODE_USERNAME@${NAME[0]}:/home/$NODE_USERNAME/slave-certs/certs/node.key
-    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/ca.crt  $NODE_USERNAME@${NAME[0]}:/home/$NODE_USERNAME/slave-certs/certs/ca.crt
-    sudo ssh -i /home/nomad/.ssh/id_rsa $NODE_USERNAME@${NAME[0]} "sudo rm -drf $APPLICATION_DIR/${NAME[1]}/ && sudo mkdir -p $APPLICATION_DIR/${NAME[1]}/ && sudo mv /home/$NODE_USERNAME/slave-certs $APPLICATION_DIR/${NAME[1]}/ && sudo chown -R nomad:nomad $APPLICATION_DIR/"
+    sudo ssh -i /home/nomad/.ssh/id_rsa ${NAME[2]}@${NAME[0]} "mkdir -p /home/${NAME[2]}/slave-certs/certs/"
+    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.crt ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.crt
+    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.key  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.key
+    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/ca.crt  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/ca.crt
+    sudo ssh -i /home/nomad/.ssh/id_rsa ${NAME[2]}@${NAME[0]} "sudo rm -drf $APPLICATION_DIR/${NAME[1]}/ && sudo mkdir -p $APPLICATION_DIR/${NAME[1]}/ && sudo mv /home/${NAME[2]}/slave-certs $APPLICATION_DIR/${NAME[1]}/ && sudo chown -R nomad:nomad $APPLICATION_DIR/"
     rm cockroach-create-cert.sh
 done
 
