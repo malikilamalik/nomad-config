@@ -30,6 +30,9 @@ cockroach cert create-ca \
 --certs-dir=certs \
 --ca-key=my-safe-directory/ca.key
 
+sudo -u nomad mkdir -p /home/nomad/.ssh/
+sudo -u nomad ssh-keygen -t rsa -N "" -f /home/nomad/.ssh/id_rsa
+
 # Generate Certificates
 IFS=',' read -ra ADDR <<< "$JOIN"
 for i in "${ADDR[@]}"; do
@@ -44,8 +47,6 @@ for i in "${ADDR[@]}"; do
     mv certs/node.key $APPLICATION_DIR/${NAME[1]}/certs
     cp certs/ca.crt $APPLICATION_DIR/${NAME[1]}/certs
 
-    sudo -u nomad mkdir -p /home/nomad/.ssh/
-    sudo -u nomad ssh-keygen -t rsa -N "" -f /home/nomad/.ssh/id_rsa
     sudo -u nomad ssh-keyscan ${NAME[0]} | sudo -u nomad tee -a /home/nomad/.ssh/known_hosts
     sudo sshpass -p ${NAME[3]} ssh-copy-id -i /home/nomad/.ssh/id_rsa.pub -p 22 ${NAME[2]}@${NAME[0]}
 
