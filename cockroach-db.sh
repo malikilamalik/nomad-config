@@ -16,14 +16,6 @@ cd $APPLICATION_DIR || exit 1
 # Install SSH pass
 sudo apt-get install -qq sshpass
 
-# Synchronize clocks
-sudo timedatectl set-ntp no
-timedatectl
-sudo apt-get install -qq ntp
-sudo service ntp stop
-sudo ntpd -b time.google.com
-sudo service ntp start
-
 # Intalling CockroachDB
 curl -O https://binaries.cockroachdb.com/cockroach-v21.2.7.linux-amd64.tgz
 tar -xzvf cockroach-v21.2.7.linux-amd64.tgz
