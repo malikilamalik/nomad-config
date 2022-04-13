@@ -27,19 +27,23 @@ sudo service ntp start
 # Intalling CockroachDB
 curl -O https://binaries.cockroachdb.com/cockroach-v21.2.7.linux-amd64.tgz
 tar -xzvf cockroach-v21.2.7.linux-amd64.tgz
+sudo rm -f /usr/local/bin/cockroach
 sudo cp -i cockroach-v21.2.7.linux-amd64/cockroach /usr/local/bin/
 sudo mkdir -p /usr/local/lib/cockroach
+sudo rm -f /usr/local/lib/cockroach/libgeos.so
 sudo cp -i cockroach-v21.2.7.linux-amd64/lib/libgeos.so /usr/local/lib/cockroach/
+sudo rm -f /usr/local/lib/cockroach/libgeos_c.so
 sudo cp -i cockroach-v21.2.7.linux-amd64/lib/libgeos_c.so /usr/local/lib/cockroach/
 
 # Make Cert Directory
-mkdir certs
-mkdir my-safe-directory
+rm -drf certs
+mkdir -p certs
+rm -drf my-safe-directory
+mkdir -p my-safe-directory
 cockroach cert create-ca \
 --certs-dir=certs \
 --ca-key=my-safe-directory/ca.key
 
-sudo -u nomad ssh-keygen -t rsa -N "" -f /etc/nomad.d/.ssh/id_rsa
 
 # Generate Certificates
 IFS=',' read -ra ADDR <<< "$JOIN"
