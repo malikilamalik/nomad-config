@@ -36,7 +36,7 @@ cockroach cert create-ca \
 --certs-dir=certs \
 --ca-key=my-safe-directory/ca.key
 
-
+n=1
 # Generate Certificates
 IFS=',' read -ra ADDR <<< "$JOIN"
 for i in "${ADDR[@]}"; do
@@ -50,15 +50,18 @@ for i in "${ADDR[@]}"; do
     mv certs/node.crt $APPLICATION_DIR/${NAME[1]}/certs
     mv certs/node.key $APPLICATION_DIR/${NAME[1]}/certs
     cp certs/ca.crt $APPLICATION_DIR/${NAME[1]}/certs
-    
-    sudo -u nomad ssh-keyscan ${NAME[0]} | sudo -u nomad tee -a /etc/nomad.d/.ssh/known_hosts
-    sudo -u nomad sshpass -p ${NAME[3]} ssh-copy-id -f -p 22 ${NAME[2]}@${NAME[0]}
+    if [[ $n -gt 1 ]]
+    then
+        sudo -u nomad ssh-keyscan ${NAME[0]} | sudo -u nomad tee -a /etc/nomad.d/.ssh/known_hosts
+        sudo -u nomad sshpass -p ${NAME[3]} ssh-copy-id -f -p 22 ${NAME[2]}@${NAME[0]}
 
-    sudo ssh -i /home/nomad/.ssh/id_rsa ${NAME[2]}@${NAME[0]} "mkdir -p /home/${NAME[2]}/slave-certs/certs/"
-    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.crt ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.crt
-    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.key  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.key
-    sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/ca.crt  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/ca.crt
-    sudo ssh -i /home/nomad/.ssh/id_rsa ${NAME[2]}@${NAME[0]} "sudo rm -drf $APPLICATION_DIR/${NAME[1]}/ && sudo mkdir -p $APPLICATION_DIR/${NAME[1]}/ && sudo mv /home/${NAME[2]}/slave-certs $APPLICATION_DIR/${NAME[1]}/ && sudo chown -R nomad:nomad $APPLICATION_DIR/"
+        sudo ssh -i /home/nomad/.ssh/id_rsa ${NAME[2]}@${NAME[0]} "mkdir -p /home/${NAME[2]}/slave-certs/certs/"
+        sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.crt ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.crt
+        sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/node.key  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.key
+        sudo scp -i /home/nomad/.ssh/id_rsa $APPLICATION_DIR/${NAME[1]}/certs/ca.crt  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/ca.crt
+        sudo ssh -i /home/nomad/.ssh/id_rsa ${NAME[2]}@${NAME[0]} "sudo rm -drf $APPLICATION_DIR/${NAME[1]}/ && sudo mkdir -p $APPLICATION_DIR/${NAME[1]}/ && sudo mv /home/${NAME[2]}/slave-certs $APPLICATION_DIR/${NAME[1]}/ && sudo chown -R nomad:nomad $APPLICATION_DIR/"
+    fi
+    i=$((i+1))
     rm cockroach-create-cert.sh
 done
 
