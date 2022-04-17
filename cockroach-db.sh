@@ -59,7 +59,7 @@ for i in "${ADDR[@]}"; do
         sudo -u nomad scp  $APPLICATION_DIR/${NAME[1]}/certs/node.crt ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.crt
         sudo -u nomad scp $APPLICATION_DIR/${NAME[1]}/certs/node.key  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/node.key
         sudo -u nomad scp $APPLICATION_DIR/${NAME[1]}/certs/ca.crt  ${NAME[2]}@${NAME[0]}:/home/${NAME[2]}/slave-certs/certs/ca.crt
-        sudo -u nomad ssh  ${NAME[2]}@${NAME[0]} "sudo rm -drf $APPLICATION_DIR/${NAME[1]}/ && sudo mkdir -p $APPLICATION_DIR/${NAME[1]}/ && sudo mv /home/${NAME[2]}/slave-certs $APPLICATION_DIR/${NAME[1]}/ && sudo chown -R nomad:nomad $APPLICATION_DIR/"
+        sudo -u nomad ssh  ${NAME[2]}@${NAME[0]} "sudo rm -drf $APPLICATION_DIR/${NAME[1]}/ && sudo mkdir -p $APPLICATION_DIR/${NAME[1]}/ && sudo mv /home/${NAME[2]}/slave-certs/ $APPLICATION_DIR/${NAME[1]}/ && sudo chown -R nomad:nomad $APPLICATION_DIR/"
     fi
     n=$((n+1))
     rm cockroach-create-cert.sh
