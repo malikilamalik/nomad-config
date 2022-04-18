@@ -65,7 +65,7 @@ for i in "${ADDR[@]}"; do
     rm cockroach-create-cert.sh
 done
 
-cockroach cert create-node \
+cockroach cert create-client \
 root \
 --certs-dir=certs \
 --ca-key=my-safe-directory/ca.key
