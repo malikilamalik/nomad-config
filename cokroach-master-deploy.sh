@@ -8,4 +8,4 @@ failure() {
 
 trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
-sudo cockroach init --certs-dir=certs --host=$NODE_IP
+sudo cockroach init --certs-dir=$APPLICATION_DIR/certs --host=$NODE_IP
