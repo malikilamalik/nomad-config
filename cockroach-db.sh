@@ -13,12 +13,12 @@ mkdir -p $APPLICATION_DIR
 cd $APPLICATION_DIR || exit 1
 
 # Sync Time
-# sudo timedatectl set-ntp no
-# sudo apt-get install -qq ntp
-# sudo service ntp stop
-# sudo ntpd -b time.google.com
-# sudo service ntp start
-# sudo ntpq -p
+sudo timedatectl set-ntp no
+sudo apt-get install -qq ntp
+sudo service ntp stop
+sudo ntpd -b time.google.com
+sudo service ntp start
+sudo ntpq -p
 
 # Install SSH pass
 sudo apt-get install -qq sshpass
@@ -44,7 +44,7 @@ cockroach cert create-ca \
 --ca-key=my-safe-directory/ca.key
 
 #One time
-# sudo -u nomad ssh-keygen -t rsa -N "" -f /etc/nomad.d/.ssh/id_rsa
+sudo -u nomad ssh-keygen -t rsa -N "" -f /etc/nomad.d/.ssh/id_rsa
 
 n=1
 # Generate Certificates
