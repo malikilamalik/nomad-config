@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cockroach start \
+sudo cockroach start \
 --certs-dir=$APPLICATION_DIR/$NAME/certs \
 --advertise-addr=$NODE_IP \
 --join=$NODE_JOIN \

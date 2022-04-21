@@ -20,7 +20,7 @@ sudo rm -f /usr/local/lib/cockroach/libgeos_c.so
 sudo cp -i cockroach-v21.2.7.linux-amd64/lib/libgeos_c.so /usr/local/lib/cockroach/
 
 
-cockroach start \
+sudo cockroach start \
 --certs-dir=$APPLICATION_DIR/$NODE_NAME/slave-certs/certs/ \
 --advertise-addr=$NODE_IP \
 --join=$NODE_JOIN \
