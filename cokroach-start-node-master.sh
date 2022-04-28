@@ -1,7 +1,10 @@
 #!/bin/bash
 
+sudo ufw allow 26257/tcp
+sudo ufw allow 8080/tcp
+
 sudo cockroach start \
---certs-dir=$APPLICATION_DIR/$NAME/certs \
+--certs-dir=$APPLICATION_DIR/$NODE_NAME/certs \
 --advertise-addr=$NODE_IP \
 --join=$NODE_JOIN \
 --cache=.25 \

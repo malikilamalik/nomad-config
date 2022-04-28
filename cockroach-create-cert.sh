@@ -1,9 +1,9 @@
 #!/bin/bash
 
 cockroach cert create-node \
-||EXTERNAL_IP|| \
-||NAME||  \
-||NAME|| \
+10.127.212.137 \
+103.183.75.7 \
+cockroach-db-master  \
 localhost \
 127.0.0.1 \
 --certs-dir=certs \
