@@ -8,6 +8,9 @@ failure() {
 
 trap 'failure ${LINENO} "$BASH_COMMAND"' ERR
 
+sudo ufw allow 26257/tcp
+sudo ufw allow 8080/tcp
+
 # Intalling CockroachDB
 curl -O https://binaries.cockroachdb.com/cockroach-v21.2.7.linux-amd64.tgz
 tar -xzvf cockroach-v21.2.7.linux-amd64.tgz
