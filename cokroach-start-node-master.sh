@@ -8,5 +8,4 @@ sudo cockroach start \
 --advertise-addr=$NODE_IP \
 --join=$NODE_JOIN \
 --cache=.25 \
---max-sql-memory=.25 \
---background
+--max-sql-memory=.25
