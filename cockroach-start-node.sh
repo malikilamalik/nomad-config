@@ -26,6 +26,7 @@ sudo cp -i cockroach-v21.2.7.linux-amd64/lib/libgeos_c.so /usr/local/lib/cockroa
 sudo cockroach start \
 --certs-dir=$APPLICATION_DIR/$NODE_NAME/slave-certs/certs \
 --listen-addr=$EXTERNAL_IP \
+--http-addr=$EXTERNAL_IP \
 --join=$NODE_JOIN \
 --cache=.25 \
 --max-sql-memory=.25

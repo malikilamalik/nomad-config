@@ -6,5 +6,6 @@ cockroach cert create-node \
 ||NAME||  \
 localhost \
 127.0.0.1 \
+0.0.0.0
 --certs-dir=certs \
 --ca-key=my-safe-directory/ca.key
