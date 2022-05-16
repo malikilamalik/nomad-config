@@ -16,7 +16,7 @@ cd $APPLICATION_DIR || exit 2
 sudo apt-get install -qq sshpass
 
 # Intalling CockroachDB
-curl -O https://binaries.cockroachdb.com/cockroach-v21.3.7.linux-amd64.tgz
+curl -O https://binaries.cockroachdb.com/cockroach-v21.2.10.linux-amd64.tgz
 tar -xzvf cockroach-v21.3.7.linux-amd64.tgz
 sudo rm -f /usr/local/bin/cockroach
 sudo cp -i cockroach-v21.3.7.linux-amd64/cockroach /usr/local/bin/
