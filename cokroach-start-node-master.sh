@@ -5,7 +5,7 @@ sudo ufw allow 8080/tcp
 
 sudo cockroach start \
 --certs-dir=$APPLICATION_DIR/$NODE_NAME/certs \
---listen-addr=$INTERNAL_IP \
+--listen-addr=$EXTERNAL_IP \
 --join=$NODE_JOIN \
 --cache=.25 \
 --max-sql-memory=.25
